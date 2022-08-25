@@ -1,0 +1,1 @@
+dotnet watch --project ToolSeoViet.Web\ToolSeoViet.Web.csproj run --urls=https://localhost:5000

@@ -1,0 +1,28 @@
+﻿@using MudBlazor
+@if (!ReadOnly) {
+    <MudDatePicker @ref="picker" Label="@Label" @bind-Date="date" DateFormat="dd/MM/yyyy HH:mm" DisableToolbar="true"
+               Disabled="@Disabled">
+        <PickerActions>
+            <div style="width: 90px;">
+                <MudNumericField @bind-Value="hour" Label="Hour" Format="00" Min="0" Max="23" Step="1" Variant="Variant.Outlined" Immediate="true" />
+            </div>
+            <MudText>:</MudText>
+            <div style="width: 90px;">
+                <MudNumericField @bind-Value="minute" Label="Minute" Format="00" Min="0" Max="59" Step="5" Variant="Variant.Outlined" Immediate="true" />
+            </div>
+
+            @if (NotNull) {
+                <MudButton Style="width: 78px; height: 56px; margin-top: 5px;" Color="Color.Primary" Variant="Variant.Filled" OnClick="OnClick">OK</MudButton>
+            } else {
+                <MudButtonGroup Style="margin-top: 5px;" VerticalAlign="true" Color="Color.Primary" Variant="Variant.Filled" OverrideStyles="false">
+                    <MudButton Style="width: 78px; height: 28px;" Color="Color.Secondary" Variant="Variant.Outlined" OnClick="OnClean">Clean</MudButton>
+                    <MudButton Style="width: 78px; height: 28px;" Color="Color.Primary" Variant="Variant.Filled" OnClick="OnClick">OK</MudButton>
+                </MudButtonGroup>
+            }
+        </PickerActions>
+    </MudDatePicker>
+} else {
+    <MudField Label="@Label" Adornment="Adornment.End" AdornmentIcon="@Icons.Filled.Event">
+        <MudText>@date?.ToString("dd/MM/yyyy HH:mm")</MudText>
+    </MudField>
+}

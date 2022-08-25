@@ -1,0 +1,26 @@
+﻿@inherits LayoutComponentBase
+
+<MudThemeProvider />
+<MudDialogProvider DisableBackdropClick="true" CloseButton="true" MaxWidth="MaxWidth.Medium" Position="DialogPosition.TopCenter" FullWidth="true" />
+<MudSnackbarProvider />
+
+<MudLayout Style="background-color: whitesmoke;">
+    <MudAppBar Color="Color.Primary">
+        <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="DrawerToggle" />
+        <MudSpacer />
+        <UserMenu />
+    </MudAppBar>
+    <MudDrawer @bind-Open="drawerOpen">
+        <MudDrawerHeader>
+            <MudImage Src="assets/logo.jpg" Height="40" />
+        </MudDrawerHeader>
+        <MudDrawerContainer>
+            <NavMenu />
+        </MudDrawerContainer>
+    </MudDrawer>
+    <MudMainContent Class="pt-4 pb-4">
+        <MudContainer MaxWidth="MaxWidth.False" Class="pl-4 pr-4 mt-16" >
+            @Body
+        </MudContainer>
+    </MudMainContent>
+</MudLayout>

@@ -1,0 +1,8 @@
+﻿@using MudBlazor
+@if (!ReadOnly) {
+    <MudDatePicker Label="@Label" Date="@date" DateChanged="DateChanged" DateFormat="dd/MM/yyyy" DisableToolbar="true" Disabled="@Disabled" />
+} else {
+    <MudField Label="@Label" Adornment="Adornment.End" AdornmentIcon="@Icons.Filled.Event">
+        <MudText>@date?.ToString("dd/MM/yyyy")</MudText>
+    </MudField>
+}

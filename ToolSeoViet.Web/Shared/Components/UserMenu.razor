@@ -1,0 +1,16 @@
+﻿<MudMenu Color="Color.Inherit" AnchorOrigin="Origin.BottomRight" TransformOrigin="Origin.TopRight" FullWidth="true">
+    <ActivatorContent>
+        <MudChip Color="Color.Primary" Style="min-width: 120px;">
+            <MudText>@username</MudText>
+        </MudChip>
+    </ActivatorContent>
+    <ChildContent>
+        <MudMenuItem OnClick="ChangePassword">
+            <MudText Typo="Typo.body2">Đổi mật khẩu</MudText>
+        </MudMenuItem>
+        <MudDivider />
+        <MudMenuItem Href="/login">
+            <MudText Typo="Typo.body2">Đăng Xuất</MudText>
+        </MudMenuItem>
+    </ChildContent>
+</MudMenu>

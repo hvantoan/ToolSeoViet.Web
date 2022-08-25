@@ -1,0 +1,8 @@
+﻿<MudNavMenu Class="mud-width-full" Color="@Color.Primary">
+    <MudDivider/>
+    <AuthorizeView Roles="@PermissionClaim.SEO_Setting_User">
+        <Authorized >
+            <MudNavLink Href="check-index" Icon="@Icons.Filled.Dashboard">Thứ hạng từ khóa</MudNavLink>
+        </Authorized>
+    </AuthorizeView>
+</MudNavMenu>
