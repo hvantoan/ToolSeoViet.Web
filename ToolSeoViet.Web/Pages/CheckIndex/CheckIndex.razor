@@ -1,5 +1,49 @@
-﻿@page "/check-index"
+﻿@page "/index"
+@using ToolSeoViet.Web.Models.Seo
 
-<MudCard>
+<MudText Style="font-size: 32px">Kiểm Tra Tên Miền</MudText>
+<MudTextField T="string" @bind-Text="@strDomain"
+              Label="Paste URL here"
+              Lines="3" Variant="Variant.Outlined"
+              Placeholder="Nhập mỗi tên miền 1 dòng (http://domain.com)"></MudTextField>
+<MudButton Style="margin-top: 16px; margin-right: 8px" Disabled="@loading" OnClick="AddManyDomain" Variant="Variant.Filled" Color="Color.Primary">
+    @if (@loading)
+    {
+        <MudProgressCircular Class="ms-n1" Size="Size.Small" Indeterminate="true" />
+        <MudText Class="ms-2">Đang kiểm tra</MudText>
+    }
+    else
+    {
+        <MudText>Tải tên miền</MudText>
+    }
+</MudButton>
+<MudButton Style="margin-top: 16px; margin-right: 8px" Disabled="@loading" OnClick="SendDomain" Variant="Variant.Filled" Color="Color.Primary">
+    @if (@loading)
+    {
+        <MudProgressCircular Class="ms-n1" Size="Size.Small" Indeterminate="true" />
+        <MudText Class="ms-2">Đang kiểm tra</MudText>
+    }
+    else
+    {
+        <MudText>Kiểm tra</MudText>
+    }
+</MudButton>
 
-</MudCard>
+<MudTable Items="@checkIndices" Hover="true" T="CheckIndexDto" Breakpoint="Breakpoint.Sm" Loading="false" LoadingProgressColor="Color.Info">
+    <HeaderContent>
+        <MudTh>STT</MudTh>
+        <MudTh>Đường dẫn</MudTh>
+        <MudTh>Google Index</MudTh>
+    </HeaderContent>
+    <RowTemplate>
+        <MudTd>@context.STT</MudTd>
+        <MudTd Style="font-weight: bold;">@context.Href</MudTd>
+        <MudTd>
+            @if (@context.Status == Models.ECheckIndex.Done)
+            {
+                <MudIcon Icon="@Icons.Outlined.DoneOutline"/>
+            }
+        </MudTd>
+    </RowTemplate>
+</MudTable>
+
