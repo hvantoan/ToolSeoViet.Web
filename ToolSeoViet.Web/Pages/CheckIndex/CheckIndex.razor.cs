@@ -17,29 +17,67 @@ namespace ToolSeoViet.Web.Pages.CheckIndex
         [Inject] public ISnackbar Snackbar { get; set; }
         [Inject] public SeoService SeoServices { get; set; }
 
-        public List<CheckIndexDto> checkIndices = new();
+        public List<CheckIndexDto> checkIndices = new()
+        {
+            new CheckIndexDto()
+            {
+                Href = "https://dichvubocxep.vn/bang-gia-dich-vu-boc-xep-binh-duong-tron-goi-nam-2022/",
+                Status = ECheckIndex.None,
+                STT = 1
+            },
+            new CheckIndexDto()
+            {
+                Href = "https://dichvubocxep.vn/bang-gia-dich-vu-boc-xep-binh-duong-tron-goi-nam-2022/",
+                Status = ECheckIndex.None,
+                STT = 2
+            },
+            new CheckIndexDto()
+            {
+                Href = "https://dichvubocxep.vn/bang-gia-dich-vu-boc-xep-binh-duong-tron-goi-nam-2022/",
+                Status = ECheckIndex.None,
+                STT = 3
+            },
+            new CheckIndexDto()
+            {
+                Href = "https://dichvubocxep.vn/bang-gia-dich-vu-boc-xep-binh-duong-tron-goi-nam-2022/",
+                Status = ECheckIndex.None,
+                STT = 4
+            },
+            new CheckIndexDto()
+            {
+                Href = "https://dichvubocxep.vn/bang-gia-dich-vu-boc-xep-binh-duong-tron-goi-nam-2022/",
+                Status = ECheckIndex.None,
+                STT = 5
+            },
+        };
 
         private bool loading = false;
-
+        private bool enable = false;
         private string strDomain;
         public void AddManyDomain(MouseEventArgs args)
         {
-            loading = true;
-            var domains = strDomain.Split("\n").ToList();
-            int index = this.checkIndices.Count == 0 ? 0 : this.checkIndices.Max(o => o.STT);
-            foreach (var item in domains)
+            this.strDomain = this.strDomain.Trim();
+            if (strDomain != null)
             {
-                if (this.checkIndices.Any(o=>o.Href == item) || string.IsNullOrEmpty(item.Trim())) continue;
-                index++;
-                this.checkIndices.Add(new CheckIndexDto()
+                var domains = strDomain.Split("\n").ToList();
+                if (domains != null)
                 {
-                    STT = index,
-                    Href = item,
-                    Status = ECheckIndex.None
-                });
+                    int index = this.checkIndices.Count == 0 ? 0 : this.checkIndices.Max(o => o.STT);
+                    foreach (var item in domains)
+                    {
+                        if (this.checkIndices.Any(o => o.Href == item) || string.IsNullOrEmpty(item.Trim())) continue;
+                        index++;
+                        this.checkIndices.Add(new CheckIndexDto()
+                        {
+                            STT = index,
+                            Href = item,
+                            Status = ECheckIndex.None
+                        });
+                    }
+                }
             }
+            strDomain = "";
             StateHasChanged();
-            loading = false;
         }
 
         private async Task SendDomain(MouseEventArgs args)
@@ -48,15 +86,14 @@ namespace ToolSeoViet.Web.Pages.CheckIndex
             {
                 this.loading = true;
                 StateHasChanged();
-                for (int index = 0; index < this.checkIndices.Count; index++)
+                this.checkIndices.ForEach(o => o.Status = ECheckIndex.Checking);
+                for (int index = 0; index < this.checkIndices.Count(); index++)
                 {
                     var data = await this.SeoServices.CheckIndex(new CheckIndexRequest() { Href = this.checkIndices[index].Href });
-                    if (data != null) { 
-                        this.checkIndices[index] = data;
-                        this.checkIndices[index].STT = index + 1;
-                        StateHasChanged();
-                        await Task.Delay(1000);
-                    }
+                    this.checkIndices[index] = data ?? this.checkIndices[index];
+                    this.checkIndices[index].STT = index + 1;
+                    StateHasChanged();
+                    await Task.Delay(500);
                 }
             }
             catch (System.Exception)

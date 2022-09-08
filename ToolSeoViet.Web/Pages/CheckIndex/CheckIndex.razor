@@ -1,22 +1,16 @@
 ﻿@page "/index"
 @using ToolSeoViet.Web.Models.Seo
 
-<MudText Style="font-size: 32px">Kiểm Tra Tên Miền</MudText>
+<MudText Style="font-size: 20px">Kiểm Tra Tên Miền</MudText>
 <MudTextField T="string" @bind-Text="@strDomain"
+              Class="mud-secondary-text"
               Label="Paste URL here"
               Lines="3" Variant="Variant.Outlined"
-              Placeholder="Nhập mỗi tên miền 1 dòng (http://domain.com)"></MudTextField>
-<MudButton Style="margin-top: 16px; margin-right: 8px" Disabled="@loading" OnClick="AddManyDomain" Variant="Variant.Filled" Color="Color.Primary">
-    @if (@loading)
-    {
-        <MudProgressCircular Class="ms-n1" Size="Size.Small" Indeterminate="true" />
-        <MudText Class="ms-2">Đang kiểm tra</MudText>
-    }
-    else
-    {
-        <MudText>Tải tên miền</MudText>
-    }
+              Placeholder="Nhập mỗi tên miền 1 dòng (http://domain.com)" ValueChanged="@((e)=>@enable = !enable)"></MudTextField>
+<MudButton Style="margin-top: 16px; margin-right: 8px" Disabled="!enable" OnClick="AddManyDomain" Variant="Variant.Filled" Color="Color.Primary">
+    <MudText>Tải tên miền</MudText>
 </MudButton>
+
 <MudButton Style="margin-top: 16px; margin-right: 8px" Disabled="@loading" OnClick="SendDomain" Variant="Variant.Filled" Color="Color.Primary">
     @if (@loading)
     {
@@ -29,19 +23,25 @@
     }
 </MudButton>
 
-<MudTable Items="@checkIndices" Hover="true" T="CheckIndexDto" Breakpoint="Breakpoint.Sm" Loading="false" LoadingProgressColor="Color.Info">
+<MudTable Elevation="2" Items="@checkIndices" Hover="true" T="CheckIndexDto"
+          Breakpoint="Breakpoint.Sm" Loading="false" LoadingProgressColor="Color.Info"
+          Style="margin-top: 16px;">
     <HeaderContent>
-        <MudTh>STT</MudTh>
-        <MudTh>Đường dẫn</MudTh>
-        <MudTh>Google Index</MudTh>
+        <MudTh Style="background-color: whitesmoke;">STT</MudTh>
+        <MudTh Style="background-color: whitesmoke;">Đường dẫn</MudTh>
+        <MudTh Style="text-align: center; background-color: whitesmoke;">Google Index</MudTh>
     </HeaderContent>
     <RowTemplate>
         <MudTd>@context.STT</MudTd>
         <MudTd Style="font-weight: bold;">@context.Href</MudTd>
-        <MudTd>
+        <MudTd Style="text-align: center;">
             @if (@context.Status == Models.ECheckIndex.Done)
             {
-                <MudIcon Icon="@Icons.Outlined.DoneOutline"/>
+                <MudIcon Icon="@Icons.Outlined.DoneOutline" />
+            }
+            else if (@context.Status == Models.ECheckIndex.Checking)
+            {
+                <MudProgressCircular Color="Color.Primary" Size="Size.Small" Indeterminate="true" />
             }
         </MudTd>
     </RowTemplate>
