@@ -1,11 +1,23 @@
-﻿@*@page "/position" 
+﻿@page "/position" 
 @using ToolSeoViet.Web.Models.Seo
+
+@inject IDialogService DialogService
+
+<MudButton OnClick="OpenDialog" Variant="Variant.Filled" Color="Color.Primary">
+    Options Dialog
+</MudButton>
+@code {
+
+    private void OpenDialog()
+    {
+        DialogService.Show<Dialog>("Options Dialog");
+    }
+}
 
 <MudTable T="CheckPositionDto" Items="@items" Context="context" @bind-SelectedItem="@checkPosition" OnRowClick="@((e) => {success = false;})"
               Height="calc(100vh - 200px)" Hover="true" Striped="true" Dense="true" Loading="@loading" ReadOnly="true"
               FixedHeader="true" FixedFooter="true">
               <HeaderContent>
-        <MudTh>Nr</MudTh>
         <MudTh>STT</MudTh>
         <MudTh>Từ khóa</MudTh>
         <MudTh>Vị trí</MudTh>
@@ -15,10 +27,10 @@
         <MudTh>Liên kết</MudTh>
     </HeaderContent>
     <RowTemplate>
-        <MudTd DataLabel="Nr">@context.Number</MudTd>
+        @*<MudTd DataLabel="Nr">@context.Number</MudTd>
         <MudTd DataLabel="Sign">@context.Sign</MudTd>
         <MudTd DataLabel="Name">@context.Name</MudTd>
         <MudTd DataLabel="Position" HideSmall="_hidePosition">@context.Position</MudTd>
-        <MudTd DataLabel="Molar mass">@context.Molar</MudTd>
+        <MudTd DataLabel="Molar mass">@context.Molar</MudTd>*@
     </RowTemplate>
-</MudTable>*@
+</MudTable>

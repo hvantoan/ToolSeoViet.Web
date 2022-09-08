@@ -4,15 +4,15 @@
 <MudDialogProvider DisableBackdropClick="true" CloseButton="true" MaxWidth="MaxWidth.Medium" Position="DialogPosition.TopCenter" FullWidth="true" />
 <MudSnackbarProvider />
 
-<MudLayout Style="background-color: whitesmoke;">
+<MudLayout Style="background-color: white;">
     <MudAppBar Color="Color.Primary">
         <MudIconButton Icon="@Icons.Material.Filled.Menu" Color="Color.Inherit" Edge="Edge.Start" OnClick="DrawerToggle" />
         <MudSpacer />
         <UserMenu />
     </MudAppBar>
-    <MudDrawer @bind-Open="drawerOpen">
-        <MudDrawerHeader>
-            <MudImage Src="assets/logo.jpg" Height="40" />
+    <MudDrawer @bind-Open="drawerOpen" Style="background-color: white">
+        <MudDrawerHeader Style="padding: 0; max-height: 64px">
+            <MudImage Src="assets/logohkt.jpg" Style="width: 100%; height: 100%; object-fit: cover;" />
         </MudDrawerHeader>
         <MudDrawerContainer>
             <NavMenu />
