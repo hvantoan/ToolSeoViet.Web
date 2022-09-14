@@ -13,7 +13,7 @@
                   Placeholder="Nhập từ khóa">
     </MudTextField>
 
-    <MudButton Style="margin-top: 16px; width: 40%;" Disabled="loading" OnClick="SendKeyword" Variant="Variant.Filled" Color="Color.Primary">
+    <MudButton ButtonType="ButtonType.Submit" Style="margin-top: 16px; width: 40%;" Disabled="loading" OnClick="SendKeyword" Variant="Variant.Filled" Color="Color.Primary">
         @if (@loading)
         {
             <MudProgressCircular Class="ms-n1" Size="Size.Small" Indeterminate="true" />
