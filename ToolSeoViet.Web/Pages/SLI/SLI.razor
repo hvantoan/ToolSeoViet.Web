@@ -1,0 +1,55 @@
+﻿@page "/sli"
+@using ToolSeoViet.Web.Models.Seo.GetContent
+
+<MudText Style="font-size: 20px">Tải dàn bài TOP 10</MudText>
+<div style="">
+    <div style="  display: flex;
+  align-items: stretch; align-items: center;">
+        <div style="flex-grow: 4;">
+            <MudTextField @bind-Value="key" Label="Keyword" Variant="Variant.Outlined" Adornment="Adornment.End" AdornmentIcon="@Icons.Filled.Search" AdornmentColor="Color.Secondary" />
+        </div>
+        <div style="margin: 0 25px; flex-grow: 4;">
+            <MudTextField @bind-Value="strDomain" Label="URL" Variant="Variant.Outlined" Adornment="Adornment.End" AdornmentIcon="@Icons.Filled.InsertLink" AdornmentColor="Color.Secondary" />
+        </div>
+        <div style="flex-grow: 2;">
+            <MudButton ButtonType="ButtonType.Submit" Style=" width: 100%;" Disabled="loading" OnClick="SendKeywordSLI" Variant="Variant.Filled" Color="Color.Primary">
+                @if (@loading)
+                {
+                    <MudProgressCircular Class="ms-n1" Size="Size.Small" Indeterminate="true" />
+                    <MudText Class="ms-2">Đang Tìm kiếm</MudText>
+                }
+                else
+                {
+                    <MudText>Tìm kiếm</MudText>
+                }
+            </MudButton>
+        </div>
+    </div>
+</div>
+
+<div style="display: flex;">
+    <MudTextField T="string" @bind-Text="@strContent"
+                  Class="mud-secondary-text"
+                  Label="Dán nội dung tại đây"
+                  Lines="18" Variant="Variant.Outlined" Style="margin-right: 10px;" />
+
+    <div style="width: 500px; height: auto; background-color: #CCC; margin-top: 7px;">
+        <div>
+            @foreach (var e in item.Sli?.Take(50) ?? new List<SLIDto>())
+            {
+                if(strContent.Contains(e.KeyWord))
+                {
+                    <MudChip Color="Color.Success">@e.KeyWord</MudChip>
+
+                    
+                } else
+                {
+                    <MudChip Color="Color.Dark">@e.KeyWord</MudChip>
+                }
+            }
+            <MudProgressLinear Color="Color.Tertiary" Size="Size.Large" Value="100" ><b>@strContent.Length</b></MudProgressLinear>
+        </div>
+    </div>
+</div>
+
+

@@ -7,20 +7,9 @@
               Label="Paste URL here"
               Lines="3" Variant="Variant.Outlined"
               Placeholder="Nhập mỗi tên miền 1 dòng (http://domain.com)" ValueChanged="@((e)=>@enable = !enable)"></MudTextField>
-<MudButton Style="margin-top: 16px; margin-right: 8px" Disabled="!enable" OnClick="AddManyDomain" Variant="Variant.Filled" Color="Color.Primary">
-    <MudText>Tải tên miền</MudText>
-</MudButton>
 
-<MudButton Style="margin-top: 16px; margin-right: 8px" Disabled="@loading" OnClick="SendDomain" Variant="Variant.Filled" Color="Color.Primary">
-    @if (@loading)
-    {
-        <MudProgressCircular Class="ms-n1" Size="Size.Small" Indeterminate="true" />
-        <MudText Class="ms-2">Đang kiểm tra</MudText>
-    }
-    else
-    {
-        <MudText>Kiểm tra</MudText>
-    }
+<MudButton Style="margin-top: 16px; margin-right: 8px" Disabled="!enable" OnClick="AddManyDomain" Variant="Variant.Filled" Color="Color.Primary">
+    <MudText>Thêm từ khóa</MudText>
 </MudButton>
 
 <MudTable Elevation="2" Items="@checkIndices" Hover="true" T="CheckIndexDto"
@@ -47,3 +36,14 @@
     </RowTemplate>
 </MudTable>
 
+<MudButton Style="margin-top: 16px; margin-right: 8px" Disabled="@loading" OnClick="SendDomain" Variant="Variant.Filled" Color="Color.Primary">
+    @if (@loading)
+    {
+        <MudProgressCircular Class="ms-n1" Size="Size.Small" Indeterminate="true" />
+        <MudText Class="ms-2">Đang kiểm tra</MudText>
+    }
+    else
+    {
+        <MudText>Kiểm tra</MudText>
+    }
+</MudButton>
