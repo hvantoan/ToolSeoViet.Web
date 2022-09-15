@@ -48,19 +48,6 @@ namespace ToolSeoViet.Web.Pages.CheckPosition
                             Position = 0
                         });
                     }
-                    //foreach (var item in keywords)
-                    //{
-                    //    if (this.searchPositons.Any(o => o.Href == item) || string.IsNullOrEmpty(item.Trim())) continue;
-                    //    index++;
-                    //    this.searchPositons.Add(new SearchPositonDto()
-                    //    {
-                    //        STT = index,
-                    //        Href = strDomain,
-                    //        Key = item,
-                    //        Name = "None",
-                    //        Position = 0
-                    //    });
-                    //}
                 }
             }
         }

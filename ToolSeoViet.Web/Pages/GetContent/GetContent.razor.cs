@@ -28,7 +28,7 @@ namespace ToolSeoViet.Web.Pages.GetContent
                     throw new ManagedException("Từ khóa không được để trống");
                 this.item = await this.SeoServices.GetContent(new GetContentRequest() { 
                     KeyWord = this.key,
-                    Num = 10
+                    Num = 2
                 });
                
             }
@@ -40,6 +40,34 @@ namespace ToolSeoViet.Web.Pages.GetContent
             {
                 this.loading = false;
                 StateHasChanged();
+            }
+        }
+        private async Task Enter(KeyboardEventArgs e)
+        {
+            if (e.Code == "Enter" || e.Code == "NumpadEnter")
+            {
+                try
+                {
+                    this.loading = true;
+                    StateHasChanged();
+                    if (string.IsNullOrEmpty(this.key.Trim()))
+                        throw new ManagedException("Từ khóa không được để trống");
+                    this.item = await this.SeoServices.GetContent(new GetContentRequest()
+                    {
+                        KeyWord = this.key,
+                        Num = 2
+                    });
+
+                }
+                catch (System.Exception ex)
+                {
+                    throw new ManagedException(ex.ToString());
+                }
+                finally
+                {
+                    this.loading = false;
+                    StateHasChanged();
+                }
             }
         }
     }
