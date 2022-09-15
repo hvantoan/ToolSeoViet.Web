@@ -1,5 +1,6 @@
 ﻿@page "/sli"
 @using ToolSeoViet.Web.Models.Seo.GetContent
+@using TuanVu.Management.Web.Utilities.Extentions
 
 <MudText Style="font-size: 20px">Tải dàn bài TOP 10</MudText>
 <div style="">
@@ -33,17 +34,17 @@
                   Label="Dán nội dung tại đây"
                   Lines="18" Variant="Variant.Outlined" Style="margin-right: 10px;" />
 
-    <div style="width: 500px; height: auto; background-color: #CCC; margin-top: 7px;">
+    <div style="width: 500px; height: auto; background-color: #f3eeee; margin-top: 7px;">
         <div>
             @foreach (var e in item.Sli?.Take(50) ?? new List<SLIDto>())
             {
-                if(strContent.Contains(e.KeyWord))
+                if(strContent.UnsignedUnicode().Contains(e.KeyWord.UnsignedUnicode()))
                 {
                     <MudChip Color="Color.Success">@e.KeyWord</MudChip>
                     
                 } else
                 {
-                    <MudChip Color="Color.Dark">@e.KeyWord</MudChip>
+                    <MudChip Color="Color.Default">@e.KeyWord</MudChip>
                 }
             }
             <MudProgressLinear Style="height: 25px;" Color="Color.Tertiary" Size="Size.Large" Value="100" Rounded="true"><b>@strContent.Split(separator, StringSplitOptions.RemoveEmptyEntries).Length</b></MudProgressLinear>
