@@ -40,14 +40,13 @@
                 if(strContent.Contains(e.KeyWord))
                 {
                     <MudChip Color="Color.Success">@e.KeyWord</MudChip>
-
                     
                 } else
                 {
                     <MudChip Color="Color.Dark">@e.KeyWord</MudChip>
                 }
             }
-            <MudProgressLinear Color="Color.Tertiary" Size="Size.Large" Value="100" ><b>@strContent.Length</b></MudProgressLinear>
+            <MudProgressLinear Style="height: 25px;" Color="Color.Tertiary" Size="Size.Large" Value="100" Rounded="true"><b>@strContent.Split(separator, StringSplitOptions.RemoveEmptyEntries).Length</b></MudProgressLinear>
         </div>
     </div>
 </div>

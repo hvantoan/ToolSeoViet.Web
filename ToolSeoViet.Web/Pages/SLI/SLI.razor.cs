@@ -16,6 +16,7 @@ namespace ToolSeoViet.Web.Pages.SLI
         [Inject] public SeoService SeoServices { get; set; }
 
         private string strContent = "";
+        char[] separator = { ' ' };
 
         private SearchContentDto item = new();
         private bool loading = false;

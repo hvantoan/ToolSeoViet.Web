@@ -10,7 +10,8 @@
     <MudTextField FullWidth="true" T="string" @bind-Text="@key"
                   Class="mud-secondary-text"
                   Lines="1" Variant="Variant.Outlined"
-                  Placeholder="Nhập từ khóa">
+                  Placeholder="Nhập từ khóa"
+    @onkeydown="@Enter">
     </MudTextField>
 
     <MudButton ButtonType="ButtonType.Submit" Style="margin-top: 16px; width: 40%;" Disabled="loading" OnClick="SendKeyword" Variant="Variant.Filled" Color="Color.Primary">
