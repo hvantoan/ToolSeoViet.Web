@@ -1,10 +1,13 @@
 ﻿using Blazored.LocalStorage;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using ToolSeoViet.Web.Models;
 using ToolSeoViet.Web.Models.Seo;
 using ToolSeoViet.Web.Models.Seo.GetContent;
+using ToolSeoViet.Web.Models.Seo.GetProject;
 using ToolSeoViet.Web.Models.Seo.SearchPositon;
 using ToolSeoViet.Web.Services.Common;
+using ToolSeoViet.Web.Services.Project;
 
 namespace ToolSeoViet.Web.Services.SeoServices
 {
@@ -30,6 +33,12 @@ namespace ToolSeoViet.Web.Services.SeoServices
             var response = await this.httpService.PostAsync<BaseResponse<SearchPositonDto>>("/api/seo/position", searchPositonRequest);
             ValidateResponse(response);
             return response.Data;
+        }
+        public async Task<List<ProjectDto>> All()
+        {
+            var response = await this.httpService.GetAsync<BaseResponse<ListProjectResponse>>("/api/project/all");
+            ValidateResponse(response);
+            return response.Data?.Items ?? default;
         }
     }
 }
