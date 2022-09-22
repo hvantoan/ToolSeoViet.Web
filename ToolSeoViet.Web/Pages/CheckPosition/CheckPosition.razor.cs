@@ -79,5 +79,24 @@ namespace ToolSeoViet.Web.Pages.CheckPosition
                 StateHasChanged();
             }
         }
+        private void OpenDialog(MouseEventArgs args)
+        {
+            try
+            {
+                this.loading = true;
+                StateHasChanged();
+                DialogService.Show<Dialog>("Các dự án!");
+
+            }
+            catch (System.Exception ex)
+            {
+                throw new ManagedException(ex.ToString());
+            }
+            finally
+            {
+                this.loading = false;
+                StateHasChanged();
+            }
+        }
     }
 }
