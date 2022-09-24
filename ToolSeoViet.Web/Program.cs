@@ -11,6 +11,7 @@ using System.Net.Http;
 using System.Threading.Tasks;
 using ToolSeoViet.Web.Services;
 using ToolSeoViet.Web.Services.Common;
+using ToolSeoViet.Web.Services.ProjectService;
 using ToolSeoViet.Web.Services.SeoServices;
 using TuanVu.Management.Web;
 using TuanVu.Management.Web.Utilities.Helpers;
@@ -49,6 +50,7 @@ namespace ToolSeoViet.Web {
 
             builder.Services.AddScoped<AuthService>();
             builder.Services.AddScoped<SeoService>();
+            builder.Services.AddScoped<ProjectService>();
 
 
             var host = builder.Build();

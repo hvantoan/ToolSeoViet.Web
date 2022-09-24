@@ -28,9 +28,9 @@ namespace ToolSeoViet.Web.Services.SeoServices
             return response.Data;
         }
 
-        public async Task<SearchPositonDto> SearchPosition(SearchIndexRequest searchPositonRequest)
+        public async Task<ProjectDetailDto> SearchPosition(SearchIndexRequest searchPositonRequest)
         {
-            var response = await this.httpService.PostAsync<BaseResponse<SearchPositonDto>>("/api/seo/position", searchPositonRequest);
+            var response = await this.httpService.PostAsync<BaseResponse<ProjectDetailDto>>("/api/seo/position", searchPositonRequest);
             ValidateResponse(response);
             return response.Data;
         }

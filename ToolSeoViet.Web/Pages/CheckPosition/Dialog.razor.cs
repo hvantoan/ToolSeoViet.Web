@@ -5,18 +5,15 @@ using System.Threading.Tasks;
 using ToolSeoViet.Web.Models.Seo.GetProject;
 using ToolSeoViet.Web.Services.SeoServices;
 
-namespace ToolSeoViet.Web.Pages.CheckPosition
-{
-    public partial class Dialog
-    {
+namespace ToolSeoViet.Web.Pages.CheckPosition {
+    public partial class Dialog {
         [Inject] public NavigationManager NavigationManager { get; set; }
         [Inject] public ISnackbar Snackbar { get; set; }
         [Inject] public SeoService SeoServices { get; set; }
 
         public List<ProjectDto> items = new();
 
-        protected override async void OnInitialized()
-        {
+        protected override async void OnInitialized() {
             await LoadData();
             StateHasChanged();
         }
@@ -27,13 +24,10 @@ namespace ToolSeoViet.Web.Pages.CheckPosition
 
         [CascadingParameter] MudDialogInstance MudDialog { get; set; }
 
-        void Close() => MudDialog.Close(DialogResult.Ok(true));
+        public void Close(string id) => MudDialog.Close(DialogResult.Ok(id));
 
-        public void SelectProject(ProjectDto project)
-        {
-            //TODO: Call api get project detail
-            string test = null;
-            
+        public void SelectProject(ProjectDto project) {
+            Close(project.Id);
         }
     }
 }
