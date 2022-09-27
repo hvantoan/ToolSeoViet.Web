@@ -2,58 +2,72 @@
 @using ToolSeoViet.Web.Models.Seo.GetProject
 @using ToolSeoViet.Web.Models.Seo.SearchPositon
 
-<MudButton OnClick="OpenDialog" Variant="Variant.Filled" Color="Color.Primary">
-    Dự án hiện có
-</MudButton>
+<style scoped>
+    th {
+        background-color: whitesmoke !important;
+    }
+</style>
 
-<MudText Style="font-size: 20px">Thứ Hạng Từ Khóa</MudText>
+<MudCard>
+    <MudCardHeader>
+        <MudText Typo="Typo.h6">Thứ Hạng Từ Khóa</MudText>
+        <MudSpacer />
+        <MudButton Class="mr-2" OnClick="OpenDialog" Variant="Variant.Filled" Color="Color.Primary" Disabled="loading || isAddProject">Chọn dự án</MudButton>
 
-<MudTextField T="string" @bind-Text="@strDomain"
-              Class="mud-secondary-text"
-              Label="Dán tên miền tại đây"
-              Lines="1" Variant="Variant.Outlined"
-              Placeholder="Nhập mỗi tên miền 1 dòng (http://domain.com)" ValueChanged="@((e)=>@enable = !enable)">
-</MudTextField>
-
-<MudTextField T="string" @bind-Text="@key"
-              Class="mud-secondary-text"
-              Label="Dán từ khóa tại đây"
-              Lines="3" Variant="Variant.Outlined"
-              Placeholder="Nhập mỗi từ khóa một dòng"
-              ValueChanged="@((e)=>@enable = !enable)" Margin="Margin.Normal">
-</MudTextField>
-
-<div style="display:flex;  justify-content: center; flex-direction: column; align-items: flex-start;">
-
-    <MudButton Style="margin: 12px 0;" Disabled="!enable" OnClick="GetDomains" Variant="Variant.Filled" Color="Color.Primary">
-        <MudText>Tải tên miền</MudText>vd
-    </MudButton>
-</div>
-
-<MudTable Items="@item.ProjectDetails" T="ProjectDetailDto" Context="context" Hover="true" Breakpoint="Breakpoint.Sm" Loading="false" LoadingProgressColor="Color.Info">
-    <HeaderContent>
-        <MudTh Style="text-align: center;">STT</MudTh>
-        <MudTh Style="text-align: center;">Từ khóa</MudTh>
-        <MudTh Style="text-align: center;">Ví trí mới nhất</MudTh>
-        <MudTh Style="text-align: center;">Tên bài viết</MudTh>
-        <MudTh Style="text-align: center;">Đường dẫn</MudTh>
-    </HeaderContent>
-    <RowTemplate>
-        <MudTd DataLabel="Name" Style="text-align: center;">@context.Stt</MudTd>
-        <MudTd DataLabel="Name" Style="text-align: start;">@context.Key</MudTd>
-        <MudTd DataLabel="Position" Style="text-align: center;">@context.CurrentPosition</MudTd>
-        <MudTd DataLabel="Key" Style="text-align: center;">@context.Name</MudTd>
-        <MudTd DataLabel="Href" Style="text-align: center;">@context.Url</MudTd>
-    </RowTemplate>
-</MudTable>
-
-<div style="display:flex;  justify-content: center; flex-direction: column; align-items: flex-end;">
-    <MudButton Style="margin-top: 16px; margin-right: 8px" Disabled="@loading" OnClick="SendKeyword" Variant="Variant.Filled" Color="Color.Primary">
-        @if (@loading) {
-            <MudProgressCircular Class="ms-n1" Size="Size.Small" Indeterminate="true" />
-            <MudText Class="ms-2">Đang tìm kiếm</MudText>
+        @if (!isAddProject) {
+            <MudButton OnClick="@((e)=>this.isAddProject = true)" Variant="Variant.Filled" Color="Color.Primary">Thêm dự án</MudButton>
         } else {
-            <MudText>Tìm kiếm trong top 100</MudText>
+            <MudButton OnClick="AddNewProject" Variant="Variant.Filled" Color="Color.Primary">Lưu</MudButton>
         }
-    </MudButton>
-</div>
+
+    </MudCardHeader>
+    <MudCardContent>
+        @if (isAddProject) {
+            <MudTextField T="string" @bind-Text="@item.Name" Class="mud-secondary-text"
+                      Label="Tên dự án" Lines="1" Variant="Variant.Outlined"
+                      Placeholder="Tên dự án" ValueChanged="@((e)=>@enable = !enable)">
+            </MudTextField>
+            <MudTextField T="string" @bind-Text="@item.Domain" Class="mud-secondary-text"
+                      Label="Dán tên miền tại đây" Lines="1" Variant="Variant.Outlined"
+                      Placeholder="Nhập mỗi tên miền 1 dòng (http://domain.com)" ValueChanged="@((e)=>@enable = !enable)" Margin="Margin.Normal">
+            </MudTextField>
+            <MudTextField T="string" @bind-Text="@key" Class="mud-secondary-text" Label="Dán từ khóa tại đây"
+                      Lines="3" Variant="Variant.Outlined" Placeholder="Nhập mỗi từ khóa một dòng"
+                      ValueChanged="@((e)=>@enable = !enable)" Margin="Margin.Normal">
+            </MudTextField>
+        }
+
+
+        <MudItem>
+            <MudButton Style="margin: 12px 0;" Disabled="!enable" OnClick="GetDomains" Variant="Variant.Filled" Color="Color.Primary">
+                <MudText>Tải tên miền</MudText>vd
+            </MudButton>
+            <MudButton Style="margin-left: 8px" Disabled="@loading" OnClick="SendKeyword" Variant="Variant.Filled" Color="Color.Primary">
+                @if (@loading) {
+                    <MudProgressCircular Class="ms-n1" Size="Size.Small" Indeterminate="true" />
+                    <MudText Class="ms-2">Đang tìm kiếm</MudText>
+                } else {
+                    <MudText>Tìm kiếm trong top 100</MudText>
+                }
+            </MudButton>
+        </MudItem>
+
+        <MudTable T="ProjectDetailDto" Items="@item.ProjectDetails" MultiSelection="true" @bind-SelectedItems="@selectedProjectDetails" Context="context" Hover="true" Breakpoint="Breakpoint.Sm" Loading="false" LoadingProgressColor="Color.Info" Outlined="true" FixedHeader="true" Striped="true" Bordered="true">
+            <HeaderContent>
+                <MudTh Style="text-align: center; background-color: whitesmoke;">STT</MudTh>
+                    <MudTh Style="text-align: center; background-color: whitesmoke;">Từ khóa</MudTh>
+                    <MudTh Style="text-align: center; background-color: whitesmoke;">Ví trí mới nhất</MudTh>
+                    <MudTh Style="text-align: center; background-color: whitesmoke;">Tên bài viết</MudTh>
+                    <MudTh Style="text-align: center; background-color: whitesmoke;">Đường dẫn</MudTh>
+            </HeaderContent>
+            <RowTemplate>
+                <MudTd DataLabel="Name" Style="text-align: center;">@context.Stt</MudTd>
+                <MudTd DataLabel="Name" Style="text-align: start;">@context.Key</MudTd>
+                <MudTd DataLabel="Position" Style="text-align: center;">@context.CurrentPosition</MudTd>
+                <MudTd DataLabel="Key" Style="text-align: center;">@context.Name</MudTd>
+                <MudTd DataLabel="Href" Style="text-align: center;">@context.Url</MudTd>
+            </RowTemplate>
+        </MudTable>
+    </MudCardContent>
+
+</MudCard>

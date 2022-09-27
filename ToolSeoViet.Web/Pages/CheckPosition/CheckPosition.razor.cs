@@ -1,6 +1,7 @@
 ﻿using Microsoft.AspNetCore.Components;
 using Microsoft.AspNetCore.Components.Web;
 using MudBlazor;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
@@ -19,18 +20,22 @@ namespace ToolSeoViet.Web.Pages.CheckPosition {
         [Inject] public SeoService SeoService { get; set; }
         [Inject] public IDialogService DialogService { get; set; }
 
-        public ProjectDto item = new();
+        public ProjectDto item = new() {
+            Domain = "https://nhanluckienvang.com/"
+        };
+
+        private HashSet<ProjectDetailDto> selectedProjectDetails = new HashSet<ProjectDetailDto>();
 
         public bool success = false;
         public bool loading = false;
         private bool enable = false;
+        private bool isAddProject = false;
         //two ref input
-        private string key;
-        private string strDomain = "";
+        private string key = "";
 
         public void GetDomains(MouseEventArgs args) {
-            this.key = this.key.Trim();
-            if (strDomain != null) {
+            this.key = this.key?.Trim() ?? "";
+            if (!string.IsNullOrEmpty(item.Domain) && !string.IsNullOrEmpty(this.key)) {
                 var keywords = key.Split("\n").ToList();
                 if (keywords != null) {
                     int index = this.item.ProjectDetails.Count == 0 ? 0 : this.item.ProjectDetails.Max(o => o.Stt);
@@ -39,9 +44,7 @@ namespace ToolSeoViet.Web.Pages.CheckPosition {
                         index++;
                         this.item.ProjectDetails.Add(new ProjectDetailDto() {
                             Stt = index,
-                            Url = strDomain,
-                            Name = keywords[i],
-                            Key = "None",
+                            Key = keywords[i],
                             CurrentPosition = 0,
                             BestPosition = 0,
                         });
@@ -49,11 +52,29 @@ namespace ToolSeoViet.Web.Pages.CheckPosition {
                 }
             }
         }
+
+        private async Task AddNewProject(MouseEventArgs args) {
+            if (!string.IsNullOrEmpty(this.item.Domain) && !string.IsNullOrEmpty(this.item.Name)) {
+                try {
+                    this.loading = true;
+                    this.isAddProject = false;
+                    StateHasChanged();
+                    await ProjectService.Save(this.item);
+                } catch (ManagedException e) {
+                    this.Snackbar.Add(e.Message, Severity.Error);
+                } finally {
+                    this.loading = false;
+                    StateHasChanged();
+                }
+            } else {
+
+            }
+        }
         private async Task SendKeyword(MouseEventArgs args) {
             try {
                 this.loading = true;
                 StateHasChanged();
-                if (string.IsNullOrEmpty(this.key.Trim()) || string.IsNullOrEmpty(this.strDomain.Trim()))
+                if (string.IsNullOrEmpty(this.key.Trim()) || string.IsNullOrEmpty(this.item.Domain?.Trim() ?? ""))
                     throw new ManagedException("Từ khóa hoặc domain không được để trống");
                 for (int index = 0; index < item.ProjectDetails.Count(); index++) {
 
@@ -84,8 +105,8 @@ namespace ToolSeoViet.Web.Pages.CheckPosition {
                 StateHasChanged();
                 this.item = await this.ProjectService.Get(result.Data.ToString());
 
-            } catch (System.Exception ex) {
-                throw new ManagedException(ex.ToString());
+            } catch (ManagedException e) {
+                this.Snackbar.Add(e.Message, Severity.Error);
             } finally {
                 this.loading = false;
                 StateHasChanged();

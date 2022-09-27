@@ -1,10 +1,10 @@
-﻿<MudDialog>
+﻿<MudDialog Style=" max-width:500px;">
     <DialogContent>
-        <div class="d-flex flex-column py-1">
-            @foreach(var item in items)
+        <MudItem Class="d-flex flex-column py-1 mt-2 mb-2" Style="max-height: 300px; overflow-y: scroll">
+            @foreach (var item in items)
             {
                 <MudButton OnClick="@((e) => SelectProject(item))">@item.Name</MudButton>
             }
-        </div>
+        </MudItem>
     </DialogContent>
 </MudDialog>

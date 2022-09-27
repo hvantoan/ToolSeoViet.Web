@@ -7,6 +7,6 @@ namespace ToolSeoViet.Web.Models.Seo.GetProject
         public string Id { get; set; }
         public string Name { get; set; }
         public string Domain { get; set; }
-        public List<ProjectDetailDto> ProjectDetails { get; set; }
+        public List<ProjectDetailDto> ProjectDetails { get; set; } = new();
     }
 }

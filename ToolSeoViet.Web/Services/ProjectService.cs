@@ -21,6 +21,10 @@ namespace ToolSeoViet.Web.Services.ProjectService {
             ValidateResponse(response);
             return response.Data;
         }
+
+        public async Task Save(ProjectDto projectDto)
+        {
+        }
     }
 }
 
