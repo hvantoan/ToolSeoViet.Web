@@ -11,7 +11,7 @@ namespace ToolSeoViet.Web.Pages.CheckPosition {
         [Inject] public ISnackbar Snackbar { get; set; }
         [Inject] public SeoService SeoServices { get; set; }
 
-        public List<ProjectDto> items = new();
+        private List<ProjectDto> items = new();
 
         protected override async void OnInitialized() {
             await LoadData();

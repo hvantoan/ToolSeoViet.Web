@@ -15,6 +15,7 @@ namespace ToolSeoViet.Web.Services.ProjectService {
             ValidateResponse(response);
             return response.Data?.Items ?? default;
         }
+
         public async Task<ProjectDto> Get(string id) {
             var request = new GetProjectRequest() { Id = id };
             var response = await this.httpService.PostAsync<BaseResponse<ProjectDto>>("/api/project/get", request);
@@ -22,8 +23,13 @@ namespace ToolSeoViet.Web.Services.ProjectService {
             return response.Data;
         }
 
-        public async Task Save(ProjectDto projectDto)
-        {
+        public async Task Save(ProjectDto projectDto) {
+            await this.httpService.PostAsync<BaseResponse<ProjectDto>>("/api/project/save", projectDto);
+        }
+
+        public async Task Delete(string id) {
+            var request = new DeleteProjectRequest() { Id = id };
+            await this.httpService.PostAsync<BaseResponse<ProjectDto>>("/api/project/Delete", request);
         }
     }
 }
