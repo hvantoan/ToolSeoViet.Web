@@ -1,6 +1,9 @@
 ﻿using Microsoft.AspNetCore.Components;
+using Microsoft.AspNetCore.Components.Forms;
 using Microsoft.AspNetCore.Components.Web;
 using MudBlazor;
+using System.Collections.Generic;
+using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using ToolSeoViet.Web.Exceptions;
 using ToolSeoViet.Web.Models.Seo;
@@ -17,35 +20,45 @@ namespace ToolSeoViet.Web.Pages.SLI
 
         private string strContent = "";
         char[] separator = { ' ' };
-
+        SLIDto model = new SLIDto();
         private SearchContentDto item = new();
         private bool loading = false;
         private string key = "";
         private string strDomain = "";
+        private bool loadingField = false;
+        private bool success;
+
         private async Task SendKeywordSLI(MouseEventArgs args)
         {
             try
             {
                 this.loading = true;
+                this.loadingField = true;
                 StateHasChanged();
-                if (string.IsNullOrEmpty(this.key.Trim()))
+                if (string.IsNullOrEmpty(this.model?.KeyWord?.Trim()))
                     throw new ManagedException("Từ khóa không được để trống");
                 this.item = await this.SeoServices.GetContent(new GetContentRequest()
                 {
-                    KeyWord = this.key,
+                    KeyWord = this.model.KeyWord,
                     Num = 2
                 });
 
             }
-            catch (System.Exception ex)
+            catch (ManagedException ex)
             {
-                throw new ManagedException(ex.ToString());
+                this.Snackbar.Add(ex.Message, Severity.Error);
             }
             finally
             {
                 this.loading = false;
+                this.loadingField = false;
                 StateHasChanged();
             }
+        }
+
+        private void OnValidSubmit(EditContext context) {
+            success = true;
+            StateHasChanged();
         }
     }
 }

@@ -3,52 +3,50 @@
 @using TuanVu.Management.Web.Utilities.Extentions
 
 <MudText Style="font-size: 20px">Tải dàn bài TOP 10</MudText>
-<div style="">
-    <div style="  display: flex;
+<EditForm Model="@model" OnValidSubmit="OnValidSubmit">
+    <DataAnnotationsValidator />
+        <div style="  display: flex;
   align-items: stretch; align-items: center;">
-        <div style="flex-grow: 4;">
-            <MudTextField @bind-Value="key" Label="Keyword" Variant="Variant.Outlined" Adornment="Adornment.End" AdornmentIcon="@Icons.Filled.Search" AdornmentColor="Color.Secondary" />
+            <div style="display: flex; width: 100%;">
+                <div style="flex-grow: 4;">
+                    <MudTextField Immediate="true" @bind-Value="model.KeyWord" For="@(() => model.KeyWord)" Label="Keyword" Variant="Variant.Outlined" Adornment="Adornment.End" AdornmentIcon="@Icons.Filled.Search" AdornmentColor="Color.Secondary" />
+                </div>
+                <div style="margin: 0 25px; flex-grow: 4;">
+                    <MudTextField @bind-Value="strDomain" Placeholder="Optional" Label="URL" Variant="Variant.Outlined" Adornment="Adornment.End" AdornmentIcon="@Icons.Filled.InsertLink" AdornmentColor="Color.Secondary" />
+                </div>
+                <div style="flex-grow: 2;  margin-block: auto;">
+                    <MudButton ButtonType="ButtonType.Submit" Style=" width: 100%; " Disabled="loading" OnClick="SendKeywordSLI" Variant="Variant.Filled" Color="Color.Primary">
+                        @if (@loading) {
+                            <MudProgressCircular Class="ms-n1" Size="Size.Small" Indeterminate="true" />
+                            <MudText Class="ms-2">Đang Tìm kiếm</MudText>
+                        } else {
+                            <MudText>Tìm kiếm</MudText>
+                        }
+                    </MudButton>
+                </div>
+            </div>
         </div>
-        <div style="margin: 0 25px; flex-grow: 4;">
-            <MudTextField @bind-Value="strDomain" Label="URL" Variant="Variant.Outlined" Adornment="Adornment.End" AdornmentIcon="@Icons.Filled.InsertLink" AdornmentColor="Color.Secondary" />
-        </div>
-        <div style="flex-grow: 2;">
-            <MudButton ButtonType="ButtonType.Submit" Style=" width: 100%;" Disabled="loading" OnClick="SendKeywordSLI" Variant="Variant.Filled" Color="Color.Primary">
-                @if (@loading)
-                {
-                    <MudProgressCircular Class="ms-n1" Size="Size.Small" Indeterminate="true" />
-                    <MudText Class="ms-2">Đang Tìm kiếm</MudText>
-                }
-                else
-                {
-                    <MudText>Tìm kiếm</MudText>
-                }
-            </MudButton>
-        </div>
-    </div>
-</div>
-
-<div style="display: flex;">
+</EditForm>
+<div style="display: flex; margin-top: 12px;">
     <MudTextField T="string" @bind-Text="@strContent"
                   Class="mud-secondary-text"
                   Label="Dán nội dung tại đây"
                   Lines="18" Variant="Variant.Outlined" Style="margin-right: 10px;" />
 
     <div style="width: 500px; height: auto; background-color: #f3eeee; margin-top: 7px;">
+        <LoadingPage Enable="@loadingField">
         <div>
-            @foreach (var e in item.Sli?.Take(50) ?? new List<SLIDto>())
-            {
-                if(strContent.UnsignedUnicode().Contains(e.KeyWord.UnsignedUnicode()))
-                {
+            @foreach (var e in item.Sli?.Take(50) ?? new List<SLIDto>()) {
+                if (strContent.UnsignedUnicode().Contains(e.KeyWord.UnsignedUnicode())) {
                     <MudChip Color="Color.Success">@e.KeyWord</MudChip>
-                    
-                } else
-                {
+
+                } else {
                     <MudChip Color="Color.Default">@e.KeyWord</MudChip>
                 }
             }
             <MudProgressLinear Style="height: 25px;" Color="Color.Tertiary" Size="Size.Large" Value="100" Rounded="true"><b>@strContent.Split(separator, StringSplitOptions.RemoveEmptyEntries).Length</b></MudProgressLinear>
         </div>
+        </LoadingPage>
     </div>
 </div>
 

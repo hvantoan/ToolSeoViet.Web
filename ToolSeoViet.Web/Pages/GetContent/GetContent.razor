@@ -6,26 +6,24 @@
 
 <MudText Style="font-size: 20px">Tải dàn bài TOP 10</MudText>
 
-<div style="display:flex;  justify-content: center; flex-direction: column; align-items: center;">
-    <MudTextField FullWidth="true" T="string" @bind-Text="@key"
-                  Class="mud-secondary-text"
-                  Lines="1" Variant="Variant.Outlined"
-                  Placeholder="Nhập từ khóa"
-    @onkeydown="@Enter">
-    </MudTextField>
-
-    <MudButton ButtonType="ButtonType.Submit" Style="margin-top: 16px; width: 40%;" Disabled="loading" OnClick="SendKeyword" Variant="Variant.Filled" Color="Color.Primary">
-        @if (@loading)
-        {
-            <MudProgressCircular Class="ms-n1" Size="Size.Small" Indeterminate="true" />
-            <MudText Class="ms-2">Đang Tìm kiếm</MudText>
-        }
-        else
-        {
-            <MudText>Tìm kiếm</MudText>
-        }
-    </MudButton>
-</div>
+<EditForm Model="@item" OnValidSubmit="SendKeyword">
+    <div style="display:flex;  justify-content: center; flex-direction: column; align-items: center;">
+        <MudTextField FullWidth="true" T="string" @bind-Value="@key"
+                      Class="mud-secondary-text"
+                      Lines="1" Variant="Variant.Outlined"
+                      Placeholder="Nhập từ khóa">
+        </MudTextField>
+        <MudButton ButtonType="ButtonType.Submit" Style="margin-top: 16px; width: 40%;" Disabled="loading"
+                   Variant="Variant.Filled" Color="Color.Primary">
+            @if (@loading) {
+                <MudProgressCircular Class="ms-n1" Size="Size.Small" Indeterminate="true" />
+                <MudText Class="ms-2">Đang Tìm kiếm</MudText>
+            } else {
+                <MudText>Tìm kiếm</MudText>
+            }
+        </MudButton>
+    </div>
+</EditForm>
 
 <div style=" display: flex; justify-content: end;">
     <MudButton Variant="Variant.Filled" EndIcon="@Icons.Material.Filled.ArrowDownward" Style="background-color: #10793F; color: white; width: 200px; height: 40px;">
@@ -53,27 +51,26 @@
     </MudTable>*@
 
 
-<MudExpansionPanels MultiExpansion>
-    @foreach (var e in item.Headings?.Take(10) ?? new List<HeadingDto>())
-    {
-        <MudExpansionPanel Text="@e.Name" Style="background-color: whitesmoke; margin: 16px 0;">
-            <div style="display: flex; justify-content: space-around;">
-                <div>
-                    <h2>Heading 2:</h2>
-                    @foreach (var h1 in @e.Titles ?? new List<TitleDto>() )
-                    {
-                        <p>@h1.Name</p>
-                    }
+<LoadingPage Enable="@loadingField">
+    <MudExpansionPanels MultiExpansion>
+        @foreach (var e in item.Headings?.Take(10) ?? new List<HeadingDto>()) {
+            <MudExpansionPanel Text="@e.Name" Style="background-color: whitesmoke; margin: 16px 0;">
+                <div style="display: flex; justify-content: space-around;">
+                    <div>
+                        <h2>Heading 2:</h2>
+                        @foreach (var h1 in @e.Titles ?? new List<TitleDto>()) {
+                            <p>@h1.Name</p>
+                        }
+                    </div>
+                    <div>
+                        <h2>Heading 3:</h2>
+                        @foreach (var h2 in @e.SubTitles ?? new List<SubTitleDto>()) {
+                            <p>@h2.Name</p>
+                        }
+                    </div>
+                    <br />
                 </div>
-                <div>
-                    <h2>Heading 3:</h2>         
-                    @foreach (var h2 in @e.SubTitles  ?? new List<SubTitleDto>())
-                    {
-                        <p>@h2.Name</p>
-                    }
-                </div>
-                <br />
-            </div>
-        </MudExpansionPanel>
-    }
-</MudExpansionPanels>
+            </MudExpansionPanel>
+        }
+    </MudExpansionPanels>
+</LoadingPage>
