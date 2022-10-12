@@ -20,7 +20,7 @@ namespace ToolSeoViet.Web.Pages.CheckPosition {
         [Inject] public SeoService SeoService { get; set; }
         [Inject] public IDialogService DialogService { get; set; }
 
-        public ProjectDto item = new();
+        private ProjectDto item = new();
 
         private HashSet<ProjectDetailDto> selectedProjectDetails = new HashSet<ProjectDetailDto>();
 
@@ -28,14 +28,14 @@ namespace ToolSeoViet.Web.Pages.CheckPosition {
         private bool loading = false;
         private bool enable = false;
         private bool isAddProject = false;
-        //two ref input
+
         private string key = "";
 
         public void GetDomains(MouseEventArgs args) {
             this.key = this.key?.Trim() ?? "";
             if (!string.IsNullOrEmpty(item.Domain) && !string.IsNullOrEmpty(this.key)) {
                 var keywords = key.Split("\n").Distinct().ToList();
-                if (keywords.Any()) { 
+                if (keywords.Any()) {
                     for (int i = 0; i < keywords.Count; i++) {
                         if (this.item.ProjectDetails.Any(o => o.Url == keywords[i]) || string.IsNullOrEmpty(keywords[i].Trim())) continue;
                         this.item.ProjectDetails.Add(new ProjectDetailDto() {
@@ -53,7 +53,7 @@ namespace ToolSeoViet.Web.Pages.CheckPosition {
                 projectDetail.Stt = index;
             }
         }
-        
+
         private async Task AddNew(MouseEventArgs args) {
             try {
                 this.loading = true;
@@ -88,34 +88,40 @@ namespace ToolSeoViet.Web.Pages.CheckPosition {
                 StateHasChanged();
             }
         }
-        
-        private async Task SendKeyword(MouseEventArgs args) {
+
+        private async Task Search(MouseEventArgs args) {
             try {
                 this.loading = true;
                 StateHasChanged();
-                if (string.IsNullOrEmpty(this.key.Trim()) || string.IsNullOrEmpty(this.item.Domain?.Trim() ?? ""))
-                    throw new ManagedException("Từ khóa hoặc domain không được để trống");
-                for (int index = 0; index < item.ProjectDetails.Count; index++) {
+
+                var keys = selectedProjectDetails.ToList();
+                for (int index = 0; index < keys.Count; index++) {
 
                     var data = await this.SeoService.SearchPosition(new SearchIndexRequest() {
-                        Domain = this.item.ProjectDetails[index].Url,
-                        Key = this.item.ProjectDetails[index].Name
+                        Domain = item.Domain,
+                        Key = keys[index].Key
                     });
 
-                    this.item.ProjectDetails[index] = data ?? this.item.ProjectDetails[index];
-                    this.item.ProjectDetails[index].Stt = index + 1;
+                    var projectDetail = this.item.ProjectDetails.FirstOrDefault(o => o.Id == data.Id);
+
+                    projectDetail.Name = data.Name;
+                    projectDetail.CurrentPosition = data.CurrentPosition;
+                    projectDetail.BestPosition = data.BestPosition;
+                    projectDetail.Url = data.Url;
+
                     StateHasChanged();
-                    await Task.Delay(500);
                 }
 
-            } catch (System.Exception ex) {
-                throw new ManagedException(ex.ToString());
+            } catch (ManagedException e) {
+                this.Snackbar.Add(e.Message, Severity.Error);
+            } catch (Exception e) {
+                this.Snackbar.Add(e.Message, Severity.Error);
             } finally {
                 this.loading = false;
                 StateHasChanged();
             }
         }
-        
+
         public async Task OpenDialog(MouseEventArgs args) {
             var result = await this.DialogService.Show<Dialog>("").Result;
             if (result.Cancelled) return;
@@ -131,6 +137,8 @@ namespace ToolSeoViet.Web.Pages.CheckPosition {
                 }
 
             } catch (ManagedException e) {
+                this.Snackbar.Add(e.Message, Severity.Error);
+            } catch (Exception e) {
                 this.Snackbar.Add(e.Message, Severity.Error);
             } finally {
                 this.loading = false;

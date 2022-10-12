@@ -26,7 +26,6 @@ namespace ToolSeoViet.Web.Pages.CheckPosition {
             try {
                 this.loading = true;
                 StateHasChanged();
-                await Task.Delay(3000);
                 this.items = await this.SeoServices.All();
             } catch (ManagedException e) {
                 this.Snackbar.Add(e.Message, Severity.Error);

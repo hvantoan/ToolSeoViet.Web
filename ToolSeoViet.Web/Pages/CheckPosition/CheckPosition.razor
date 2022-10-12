@@ -8,7 +8,7 @@
     }
 </style>
 
-<MudCard>
+<MudCard Style="min-height: 90vh">
     <MudCardHeader>
         <MudText Typo="Typo.h6">@(("Dự án " + item?.Name))</MudText>
             <MudSpacer />
@@ -41,13 +41,13 @@
                           ValueChanged="@((e)=>@enable = !enable)" Margin="Margin.Normal">
                 </MudTextField>
             }
-            <MudItem Class="my-2"> 
+            <MudItem Class="my-2">
                 @if (isAddProject) {
                     <MudButton Disabled="!enable" OnClick="GetDomains" Variant="Variant.Filled" Color="Color.Primary">
                         <MudText>Tải tên miền</MudText>
                     </MudButton>
                 } else if (item.ProjectDetails.Any()) {
-                    <MudButton Disabled="@loading" OnClick="SendKeyword" Variant="Variant.Filled" Color="Color.Primary">
+                    <MudButton Disabled="loading || !selectedProjectDetails.Any()" OnClick="Search" Variant="Variant.Filled" Color="Color.Primary">
                         @if (@loading) {
                             <MudProgressCircular Class="ms-n1" Size="Size.Small" Indeterminate="true" />
                             <MudText Class="ms-2">Đang tìm kiếm</MudText>
@@ -59,8 +59,8 @@
 
             </MudItem>
 
-            <MudTable Height="70vh" T="ProjectDetailDto" Items="@item.ProjectDetails" MultiSelection="true" @bind-SelectedItems="@selectedProjectDetails"
-                      Context="context" Hover="true" Breakpoint="Breakpoint.Sm" Loading="false"
+            <MudTable T="ProjectDetailDto" Items="@item.ProjectDetails" MultiSelection="true" @bind-SelectedItems="@selectedProjectDetails"
+                      Context="context" Hover="true" Breakpoint="Breakpoint.Sm" Loading="false" Dense="true"
                       LoadingProgressColor="Color.Info" Outlined="true" FixedHeader="true" Bordered="true">
                 <HeaderContent>
                     <MudTh Style="text-align: center; background-color: whitesmoke; width:100px">STT</MudTh>
