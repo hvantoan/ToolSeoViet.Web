@@ -48,3 +48,30 @@ a, .btn-link {
         right: 0.75rem;
         top: 0.5rem;
     }
+
+.tsv-login-page {
+    height: 100vh;
+    width: 100%;
+    background: linear-gradient(-135deg,#c850c0,#4158d0);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+    .tsv-login-page .tsv-login-page-container {
+        display: flex;
+        background-color: white;
+    }
+
+.tsv-login-page-container img {
+    width: 415px;
+    height: 389px;
+    margin: auto 0 auto 0;
+}
+
+.tsv-login-page .tsv-login-form {
+    /*padding: 177px 130px 33px 95px;*/
+    padding: 177px 42px 33px 39px;
+    width: 554px;
+    height: 678.8px;
+}
