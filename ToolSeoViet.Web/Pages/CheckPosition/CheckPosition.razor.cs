@@ -47,11 +47,6 @@ namespace ToolSeoViet.Web.Pages.CheckPosition {
                     }
                 }
             }
-            var index = 0;
-            foreach (var projectDetail in this.item?.ProjectDetails) {
-                index++;
-                projectDetail.Stt = index;
-            }
         }
 
         private async Task AddNew(MouseEventArgs args) {
@@ -130,11 +125,6 @@ namespace ToolSeoViet.Web.Pages.CheckPosition {
                 this.loading = true;
                 StateHasChanged();
                 this.item = await this.ProjectService.Get(result.Data.ToString());
-                var index = 0;
-                foreach (var projectDetail in this.item?.ProjectDetails) {
-                    index++;
-                    projectDetail.Stt = index;
-                }
 
             } catch (ManagedException e) {
                 this.Snackbar.Add(e.Message, Severity.Error);
