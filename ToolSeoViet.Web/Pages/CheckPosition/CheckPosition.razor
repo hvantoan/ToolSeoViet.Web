@@ -1,6 +1,5 @@
 ﻿@page "/position"
 @using ToolSeoViet.Web.Models.Seo.GetProject
-@using ToolSeoViet.Web.Models.Seo.SearchPositon
 
 <style scoped>
     th {
@@ -23,7 +22,6 @@
             <MudButton Class="mr-2" OnClick="AddNew" Variant="Variant.Filled" Disabled="!success || loading" Color="Color.Primary">Lưu</MudButton>
             <MudButton OnClick="@((e)=>this.isAddProject = false)" Variant="Variant.Filled" Color="Color.Error" EndIcon="@Icons.Outlined.Cancel">Hủy</MudButton>
         }
-
     </MudCardHeader>
     <MudCardContent>
         <MudForm @bind-IsValid="success">
@@ -36,9 +34,9 @@
                           Label="Dán tên miền tại đây" Lines="1" Variant="Variant.Outlined"
                           ValueChanged="@((e)=>@enable = !enable)" Margin="Margin.Normal">
                 </MudTextField>
-                <MudTextField T="string" @bind-Text="@key" Class="mud-secondary-text" Label="Dán từ khóa tại đây"
-                          Lines="3" Variant="Variant.Outlined" Placeholder="Nhập mỗi từ khóa một dòng"
-                          ValueChanged="@((e)=>@enable = !enable)" Margin="Margin.Normal">
+                <MudTextField T="string" Value="@key" Class="mud-secondary-text" Label="Dán từ khóa tại đây"
+                          Lines="3" Variant="Variant.Outlined" Placeholder="Nhập mỗi từ khóa một dòng" ValueChanged="@((e) => {enable = !string.IsNullOrEmpty(e.Trim()); key = e;})"
+                          Margin="Margin.Normal">
                 </MudTextField>
             }
             <MudItem Class="my-2">
@@ -56,9 +54,7 @@
                         }
                     </MudButton>
                 }
-
             </MudItem>
-
             <MudTable T="ProjectDetailDto" Items="@item.ProjectDetails" MultiSelection="true" @bind-SelectedItems="@selectedProjectDetails"
                       Context="context" Hover="true" Breakpoint="Breakpoint.Sm" Loading="false" Dense="true"
                       LoadingProgressColor="Color.Info" Outlined="true" FixedHeader="true" Bordered="true">
@@ -74,12 +70,11 @@
                     <MudTd DataLabel="STT" Style="text-align: center;">@context.Ordinal</MudTd>
                     <MudTd DataLabel="Key" Style="text-align: start;">@context.Key</MudTd>
                     <MudTd DataLabel="Key" Style="text-align: start;">@context.Name</MudTd>
-                    <MudTd DataLabel="Position" Style="text-align: center;">@context.BestPosition</MudTd>
-                    <MudTd DataLabel="Position" Style="text-align: center;">@context.CurrentPosition</MudTd>
+                    <MudTd DataLabel="Position" Style="text-align: center;">@(context.BestPosition == 0 ? "-" : context.BestPosition)</MudTd>
+                        <MudTd DataLabel="Position" Style="text-align: center;">@(context.CurrentPosition == 0 ? "-" : context.CurrentPosition)</MudTd>
                     <MudTd DataLabel="Href" Style="text-align: start;">@context.Url</MudTd>
                 </RowTemplate>
             </MudTable>
         </MudForm>
     </MudCardContent>
-
 </MudCard>

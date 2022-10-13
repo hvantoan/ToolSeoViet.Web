@@ -8,7 +8,6 @@ using System.Threading.Tasks;
 using ToolSeoViet.Web.Exceptions;
 using ToolSeoViet.Web.Models.Seo;
 using ToolSeoViet.Web.Models.Seo.GetProject;
-using ToolSeoViet.Web.Models.Seo.SearchPositon;
 using ToolSeoViet.Web.Services.ProjectService;
 using ToolSeoViet.Web.Services.SeoServices;
 
@@ -29,17 +28,20 @@ namespace ToolSeoViet.Web.Pages.CheckPosition {
         private bool enable = false;
         private bool isAddProject = false;
 
-        private string key = "";
+        private string key = string.Empty;
 
         public void GetDomains(MouseEventArgs args) {
             this.key = this.key?.Trim() ?? "";
             if (!string.IsNullOrEmpty(item.Domain) && !string.IsNullOrEmpty(this.key)) {
                 var keywords = key.Split("\n").Distinct().ToList();
                 if (keywords.Any()) {
+                    int max = 0;
+                    if (item.ProjectDetails.Any()) max = item.ProjectDetails.Max(o => o.Ordinal);
                     for (int i = 0; i < keywords.Count; i++) {
-                        if (this.item.ProjectDetails.Any(o => o.Url == keywords[i]) || string.IsNullOrEmpty(keywords[i].Trim())) continue;
+                        if (this.item.ProjectDetails.Any(o => o.Key == keywords[i]) || string.IsNullOrEmpty(keywords[i].Trim())) continue;
                         this.item.ProjectDetails.Add(new ProjectDetailDto() {
                             Key = keywords[i],
+                            Ordinal = ++max,
                             CurrentPosition = 0,
                             BestPosition = 0,
                         });
@@ -49,14 +51,13 @@ namespace ToolSeoViet.Web.Pages.CheckPosition {
             }
         }
 
-        private async Task AddNew(MouseEventArgs args) {
+        private void AddNew(MouseEventArgs args) {
             try {
                 this.loading = true;
                 StateHasChanged();
-                await ProjectService.Save(this.item);
                 this.Snackbar.Add("Thêm dự án thành công", Severity.Success);
                 this.item = new();
-                this.key = "";
+                this.key = string.Empty;
             } catch (ManagedException e) {
                 this.Snackbar.Add(e.Message, Severity.Error);
             } finally {
@@ -70,7 +71,6 @@ namespace ToolSeoViet.Web.Pages.CheckPosition {
             try {
                 this.loading = true;
                 StateHasChanged();
-
                 await this.ProjectService.Delete(this.item.Id);
                 this.Snackbar.Add($"Xóa dự án {this.item.Name} thành công", Severity.Success);
             } catch (ManagedException e) {
@@ -88,16 +88,12 @@ namespace ToolSeoViet.Web.Pages.CheckPosition {
             try {
                 this.loading = true;
                 StateHasChanged();
-
-                var keys = selectedProjectDetails.ToList();
-                for (int index = 0; index < keys.Count; index++) {
-
-                    var data = await this.SeoService.SearchPosition(new SearchIndexRequest() {
-                        Domain = item.Domain,
-                        Key = keys[index].Key
-                    });
-
-                    var projectDetail = this.item.ProjectDetails.FirstOrDefault(o => o.Id == data.Id);
+                var projectDetails = selectedProjectDetails.ToList();
+                for (int index = 0; index < projectDetails.Count; index++) {
+                    var data = await this.SeoService.SearchPosition(new SearchPositionRequest { Domain = this.item.Domain, ProjectDetail = projectDetails[index]});
+                    
+                    var projectDetail = this.item.ProjectDetails.FirstOrDefault(o => o.Id == projectDetails[index].Id);
+                    if (projectDetail == null) continue;
 
                     projectDetail.Name = data.Name;
                     projectDetail.CurrentPosition = data.CurrentPosition;
@@ -120,11 +116,15 @@ namespace ToolSeoViet.Web.Pages.CheckPosition {
         public async Task OpenDialog(MouseEventArgs args) {
             var result = await this.DialogService.Show<Dialog>("").Result;
             if (result.Cancelled) return;
+            await LoadData(result.Data?.ToString() ?? "");
 
+        }
+
+        private async Task LoadData(string id) {
             try {
                 this.loading = true;
                 StateHasChanged();
-                this.item = await this.ProjectService.Get(result.Data.ToString());
+                this.item = await this.ProjectService.Get(id);
 
             } catch (ManagedException e) {
                 this.Snackbar.Add(e.Message, Severity.Error);
