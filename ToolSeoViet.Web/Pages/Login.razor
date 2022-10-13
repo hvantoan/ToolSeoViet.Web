@@ -1,25 +1,31 @@
 ﻿@page "/login"
 @layout BlankLayout
 
+
+
 <div class="tsv-login-page">
-    <div class="tsv-login-form">
+    <div class="tsv-login-page-container">
+
+        <img src="https://colorlib.com/etc/lf/Login_v1/images/img-01.png" />
         <EditForm Model="@model" OnValidSubmit="OnValidSubmit">
+
             <DataAnnotationsValidator />
-            <MudCard>
+
+            <MudCard class="tsv-login-form">
                 <MudCardHeader>
                     <CardHeaderContent>
-                        <MudText Typo="Typo.h6">Đăng nhập</MudText>
+                        <MudText Style="text-align: center; font-weight: bold;" Typo="Typo.h5">Đăng nhập</MudText>
                     </CardHeaderContent>
                 </MudCardHeader>
                 <MudCardContent>
-                    <MudTextField Label="Tên đăng nhập" InputType="InputType.Text"
+                    <MudTextField Variant="Variant.Outlined" Style="margin-bottom: 10px;" Label="Tên đăng nhập" InputType="InputType.Text"
                                   @bind-Value="model.Username" For="@(() => model.Username)"></MudTextField>
-                    <MudTextField Label="Mật khẩu" InputType="InputType.Password" 
+                    <MudTextField Variant="Variant.Outlined" Style="margin-bottom: 10px;" Label="Mật khẩu" InputType="InputType.Password"
                                   @bind-Value="model.Password" For="@(() => model.Password)"></MudTextField>
                 </MudCardContent>
-                <MudCardActions>
-                    <MudSpacer />
-                    <MudButton ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Disabled="@loading">
+                <MudCardActions Style="padding: 0 14px; display: flex; flex-direction: column;">
+
+                    <MudButton FullWidth ButtonType="ButtonType.Submit" Variant="Variant.Filled" Color="Color.Primary" Disabled="@loading" Style="margin-bottom: 12px;">
                         @if (loading) {
                             <MudProgressCircular Class="mr-2" Size="Size.Small" Indeterminate="true" />
                             <MudText>Đang đăng nhập...</MudText>
@@ -27,7 +33,41 @@
                             <MudText>Đăng nhập</MudText>
                         }
                     </MudButton>
+                    <MudSpacer />
+
+                    <div style="width: 100%; display: flex; justify-content: flex-end; margin-top: 8px;">
+                    <MudIconButton Icon="@Icons.Custom.Brands.Google" Size="Size.Large" Variant="Variant.Filled" Color="Color.Transparent" Disabled="@loading">
+
+                        @if (loading) {
+                            <MudProgressCircular Class="mr-2" Size="Size.Small" Indeterminate="true" />
+                            <MudText Icon="@Icons.Custom.Brands.Google">Đang đăng nhập...</MudText>
+                        } else {
+                            <MudText Icon="@Icons.Custom.Brands.Google">Đăng nhập với Google</MudText>
+                        }
+                        Đăng nhập với Google
+                    </MudIconButton>
+                    <MudIconButton Style="margin-left: 18px;" Icon="@Icons.Custom.Brands.Facebook" Size="Size.Large" Variant="Variant.Filled" Color="Color.Transparent" Disabled="@loading">
+
+                        @if (loading) {
+                            <MudProgressCircular Class="mr-2" Size="Size.Small" Indeterminate="true" />
+                            <MudText Icon="@Icons.Custom.Brands.Google">Đang đăng nhập...</MudText>
+                        } else {
+                            <MudText Icon="@Icons.Custom.Brands.Google">Đăng nhập với Google</MudText>
+                        }
+                        Đăng nhập với Google
+                    </MudIconButton>
+                    </div>
                 </MudCardActions>
+                <MudText Style="text-align: center; margin-top: 12px;">
+                    Quên Tài khoản / Mật khẩu?
+                </MudText>
+                <MudText Style="text-align: start; margin-top: 24px; padding: 0 14px">
+                    <MudLink Href="#">
+                        Tạo tài khoản của bạn 
+                    <MudIconButton Icon="@Icons.Filled.KeyboardDoubleArrowRight" Color="Color.Primary" aria-label="delete"></MudIconButton>
+
+                    </MudLink>
+                </MudText>
             </MudCard>
         </EditForm>
     </div>
