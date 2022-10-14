@@ -3,6 +3,12 @@
 		<TargetFramework>net6.0</TargetFramework>
 		<EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
 	</PropertyGroup>
+	<ItemGroup>
+	  <Compile Remove="Models\Seo\SLI\**" />
+	  <Content Remove="Models\Seo\SLI\**" />
+	  <EmbeddedResource Remove="Models\Seo\SLI\**" />
+	  <None Remove="Models\Seo\SLI\**" />
+	</ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="Blazored.LocalStorage" Version="4.2.0" />
@@ -11,10 +17,6 @@
 		<PackageReference Include="Microsoft.AspNetCore.Components.WebAssembly.DevServer" Version="6.0.6" PrivateAssets="all" />
 		<PackageReference Include="MudBlazor" Version="6.0.14" />
 		<PackageReference Include="Newtonsoft.Json" Version="13.0.1" />
-	</ItemGroup>
-
-	<ItemGroup>
-	  <Folder Include="Models\Seo\SLI\" />
 	</ItemGroup>
 
 </Project>

@@ -6,6 +6,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using ToolSeoViet.Web.Exceptions;
+using ToolSeoViet.Web.Models;
 using ToolSeoViet.Web.Models.Seo;
 using ToolSeoViet.Web.Models.Seo.GetProject;
 using ToolSeoViet.Web.Services.ProjectService;
@@ -87,19 +88,23 @@ namespace ToolSeoViet.Web.Pages.CheckPosition {
         private async Task Search(MouseEventArgs args) {
             try {
                 this.loading = true;
-                StateHasChanged();
+
                 var projectDetails = selectedProjectDetails.ToList();
+                var selectedIds = projectDetails.Select(o => o.Id);
+                this.item.ProjectDetails.Where(o => selectedIds.Contains(o.Id)).ToList().ForEach(o => o.Status = ECheckPosition.Loading);
+                StateHasChanged();
+
                 for (int index = 0; index < projectDetails.Count; index++) {
+                    var projectDetail = this.item.ProjectDetails.FirstOrDefault(o => o.Id == projectDetails[index].Id);
                     var data = await this.SeoService.SearchPosition(new SearchPositionRequest { Domain = this.item.Domain, ProjectDetail = projectDetails[index]});
                     
-                    var projectDetail = this.item.ProjectDetails.FirstOrDefault(o => o.Id == projectDetails[index].Id);
                     if (projectDetail == null) continue;
 
                     projectDetail.Name = data.Name;
                     projectDetail.CurrentPosition = data.CurrentPosition;
                     projectDetail.BestPosition = data.BestPosition;
                     projectDetail.Url = data.Url;
-
+                    projectDetail.Status = ECheckPosition.Success;
                     StateHasChanged();
                 }
 

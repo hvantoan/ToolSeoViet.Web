@@ -1,4 +1,5 @@
 ﻿@page "/position"
+@using ToolSeoViet.Web.Models
 @using ToolSeoViet.Web.Models.Seo.GetProject
 
 <style scoped>
@@ -59,7 +60,6 @@
                       Context="context" Hover="true" Breakpoint="Breakpoint.Sm" Loading="false" Dense="true"
                       LoadingProgressColor="Color.Info" Outlined="true" FixedHeader="true" Bordered="true">
                 <HeaderContent>
-                    <MudTh Style="text-align: center; background-color: whitesmoke; width:100px">STT</MudTh>
                     <MudTh Style="text-align: start; background-color: whitesmoke;">Từ khóa</MudTh>
                     <MudTh Style="text-align: start; background-color: whitesmoke;">Tên bài viết</MudTh>
                     <MudTh Style="text-align: center; background-color: whitesmoke; width:100px">Ví trí</MudTh>
@@ -67,14 +67,19 @@
                     <MudTh Style="text-align: start; background-color: whitesmoke;">Đường dẫn</MudTh>
                 </HeaderContent>
                 <RowTemplate>
-                    <MudTd DataLabel="STT" Style="text-align: center;">@context.Ordinal</MudTd>
-                    <MudTd DataLabel="Key" Style="text-align: start;">@context.Key</MudTd>
-                    <MudTd DataLabel="Key" Style="text-align: start;">@context.Name</MudTd>
-                    <MudTd DataLabel="Position" Style="text-align: center;">@(context.BestPosition == 0 ? "-" : context.BestPosition)</MudTd>
-                        <MudTd DataLabel="Position" Style="text-align: center;">@(context.CurrentPosition == 0 ? "-" : context.CurrentPosition)</MudTd>
-                    <MudTd DataLabel="Href" Style="text-align: start;">@context.Url</MudTd>
-                </RowTemplate>
-            </MudTable>
-        </MudForm>
-    </MudCardContent>
-</MudCard>
+                    <MudTd Style="text-align: start;">@context.Key</MudTd>
+                    <MudTd Style="text-align: start;">@context.Name</MudTd>
+                    @if (context.Status == ECheckPosition.Loading) {
+                        <MudTd Style="text-align: center;">
+                            <MudProgressCircular Size="Size.Small" Color="Color.Success" Indeterminate="true"></MudProgressCircular>
+                        </MudTd>
+                    } else {
+                        <MudTd Style="text-align: center;">@(context.BestPosition == 0 ? "-" : context.BestPosition)</MudTd>
+                    }
+                    <MudTd Style="text-align: center;">@(context.CurrentPosition == 0 ? "-" : context.CurrentPosition)</MudTd>
+                        <MudTd Style="text-align: start;">@context.Url</MudTd>
+                    </RowTemplate>
+                </MudTable>
+            </MudForm>
+        </MudCardContent>
+    </MudCard>
