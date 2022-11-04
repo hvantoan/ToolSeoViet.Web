@@ -4,5 +4,8 @@
         Done = 1,
         Checking = 2,
     }
-
+    public enum ECheckPosition {
+        Loading = 0,
+        Success = 1,
+    }
 }

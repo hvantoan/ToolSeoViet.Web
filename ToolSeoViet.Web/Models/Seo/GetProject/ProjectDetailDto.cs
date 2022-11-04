@@ -10,6 +10,8 @@
         public int BestPosition { get; set; } = 0;
         public string Url { get; set; } = "";
         public string ProjectId { get; set; }
+
+        public ECheckPosition Status { get; set; } = ECheckPosition.Success;
         public ProjectDto Project { get; set; }
     }
 }

@@ -5,7 +5,6 @@ using ToolSeoViet.Web.Models;
 using ToolSeoViet.Web.Models.Seo;
 using ToolSeoViet.Web.Models.Seo.GetContent;
 using ToolSeoViet.Web.Models.Seo.GetProject;
-using ToolSeoViet.Web.Models.Seo.SearchPositon;
 using ToolSeoViet.Web.Services.Common;
 using ToolSeoViet.Web.Services.Project;
 
@@ -28,9 +27,9 @@ namespace ToolSeoViet.Web.Services.SeoServices
             return response.Data;
         }
 
-        public async Task<ProjectDetailDto> SearchPosition(SearchIndexRequest searchPositonRequest)
+        public async Task<ProjectDetailDto> SearchPosition(SearchPositionRequest request)
         {
-            var response = await this.httpService.PostAsync<BaseResponse<ProjectDetailDto>>("/api/seo/position", searchPositonRequest);
+            var response = await this.httpService.PostAsync<BaseResponse<ProjectDetailDto>>("/api/seo/position", request);
             ValidateResponse(response);
             return response.Data;
         }
