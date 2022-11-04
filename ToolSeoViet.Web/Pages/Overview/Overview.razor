@@ -1,0 +1,170 @@
+﻿@page "/"
+<MudText Style="font-size: 20px; margin-bottom: 30px;">Tổng quan</MudText>
+
+<MudGrid Spacing="5" Justify="Justify.Center" Style="grid-gap: 36px 90px; grid-template-columns: auto auto auto;
+  grid-template-rows: auto auto;">
+    <MudItem xl="3" md="3" sm="5" xs="6" Style="z-index: 10; box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;">
+        <MudCard Outlined="true" Style="display: flex; border: none">
+            <MudIcon Icon="@Icons.Filled.ScreenSearchDesktop" Color="Color.Secondary" Style="height: 64px; margin-left: 4px;" />
+
+            <div>
+                <MudCardContent>
+                    <MudText Style="font-size: 20px; font-weight: bold;">Scraping</MudText>
+                    <MudText Typo="Typo.body2">Cho phép Seoers tạo các dàn bài chuẩn SEO.</MudText>
+                </MudCardContent>
+                <MudCardActions>
+                    <MudButton Href="scraping" Variant="Variant.Text" Style="background-color: #593ae2; color: white; text-decoration: none">Truy cập ngay</MudButton>
+                </MudCardActions>
+            </div>
+        </MudCard>
+    </MudItem>
+
+    <MudItem xl="3" md="3" sm="5" xs="6" Style="z-index: 10; box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;">
+        <MudCard Outlined="true" Style="display: flex; border: none">
+            <MudIcon Icon="@Icons.Filled.LibraryAddCheck" Color="Color.Secondary" Style="height: 64px; margin-left: 4px;" />
+
+            <div>
+                <MudCardContent>
+                    <MudText Style="font-size: 20px; font-weight: bold;">Kiểm tra Index Google</MudText>
+                    <MudText Typo="Typo.body2">Cho phép kiểm tra các bài viết đã có trên Google chưa.</MudText>
+                </MudCardContent>
+                <MudCardActions>
+                    <MudButton Href="scraping" Variant="Variant.Text" Style="background-color: #593ae2; color: white; text-decoration: none">Truy cập ngay</MudButton>
+                </MudCardActions>
+            </div>
+        </MudCard>
+    </MudItem>
+
+    <MudItem xl="3" md="3" sm="5" xs="6" Style="z-index: 10; box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;">
+        <MudCard Outlined="true" Style="display: flex; border: none">
+            <MudIcon Icon="@Icons.Filled.Checklist" Color="Color.Secondary" Style="height: 64px; margin-left: 4px;" />
+
+            <div>
+                <MudCardContent>
+                    <MudText Style="font-size: 20px; font-weight: bold;">Kiểm tra top Google</MudText>
+                    <MudText Typo="Typo.body2">Kiểm tra thứ hạng bài viết trên website của bạn.</MudText>
+                </MudCardContent>
+                <MudCardActions>
+                    <MudButton Href="position" Variant="Variant.Text" Style="background-color: #593ae2; color: white; text-decoration: none">Truy cập ngay</MudButton>
+                </MudCardActions>
+            </div>
+        </MudCard>
+    </MudItem>
+
+    <MudItem xl="3" md="3" sm="5" xs="6" Style="z-index: 10; box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;">
+        <MudCard Outlined="true" Style="display: flex; border: none">
+            <MudIcon Icon="@Icons.Filled.Compare" Color="Color.Secondary" Style="height: 64px; margin-left: 4px;" />
+            <div>
+                <MudCardContent>
+                    <MudText Style="font-size: 20px; font-weight: bold;">Kiểm tra bài viết SEO</MudText>
+                    <MudText Typo="Typo.body2">Thực hiện kiểm tra nhanh chóng bài viết chuẩn SEO không?</MudText>
+                </MudCardContent>
+                <MudCardActions>
+                    <MudButton Href="sli" Variant="Variant.Text" Style="background-color: #593ae2; color: white; text-decoration: none">Truy cập ngay</MudButton>
+                </MudCardActions>
+            </div>
+        </MudCard>
+    </MudItem>
+
+    <MudItem xl="3" md="3" sm="5" xs="6" Style="z-index: 10; box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;">
+        <MudCard Outlined="true" Style="display: flex; border: none">
+            <MudIcon Icon="@Icons.Custom.Uncategorized.Radioactive" Color="Color.Secondary" Style="height: 64px; margin-left: 4px; text-decoration: none" />
+            <div>
+                <MudCardContent>
+                    <MudText Style="font-size: 20px; font-weight: bold;">Story of the day</MudText>
+                    <MudText Typo="Typo.body2">The quick, brown fox jumps over a lazy dog.</MudText>
+                </MudCardContent>
+                <MudCardActions>
+                    <MudButton Variant="Variant.Text" Style="background-color: #593ae2; color: white; text-decoration: none">Truy cập ngay</MudButton>
+                </MudCardActions>
+            </div>
+        </MudCard>
+    </MudItem>
+
+    <MudItem xl="3" md="3" sm="5" xs="6" Style="z-index: 10; box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;">
+        <MudCard Outlined="true" Style="display: flex; border: none">
+            <MudIcon Icon="@Icons.Custom.Uncategorized.Radioactive" Color="Color.Secondary" Style="height: 64px; margin-left: 4px;" />
+            <div>
+                <MudCardContent>
+                    <MudText Style="font-size: 20px; font-weight: bold;"> Story of the day</MudText>
+                    <MudText Typo="Typo.body2">The quick, brown fox jumps over a lazy dog.</MudText>
+                </MudCardContent>
+                <MudCardActions>
+                    <MudButton Variant="Variant.Text" Style="background-color: #593ae2; color: white; text-decoration: none">Truy cập ngay</MudButton>
+                </MudCardActions>
+            </div>
+        </MudCard>
+    </MudItem>
+
+</MudGrid>
+
+<MudText Style="font-size: 20px; margin-top: 54px;">Tin tức</MudText>
+
+<div style="display: flex; width: 100%; height: 261px; margin-top: 54px;">
+    <MudTabs Elevation="1" Rounded="true" PanelClass="pa-6" Style="flex: 1;">
+        <MudTabPanel Text="Cập nhật mới:" ToolTip="ToolTip One">
+            <MudText><MudIcon Icon="@Icons.Filled.ArrowCircleRight" Color="Color.Secondary"/> Tính năng Scraping <br/> <span style="margin-left: 20px;font-size: 12px;">Cập nhật 1 tháng trước</span></MudText>
+            <MudText><MudIcon Icon="@Icons.Filled.ArrowCircleRight" Color="Color.Secondary"/>Tính năng Check Index <br/> <span style="margin-left: 20px;font-size: 12px;">Cập nhật 1 tháng trước</span></MudText>
+            <MudText><MudIcon Icon="@Icons.Filled.ArrowCircleRight" Color="Color.Secondary"/>Tính năng kiểm tra top Google<br/> <span style="margin-left: 20px;font-size: 12px;">Cập nhật 1 tháng trước</span></MudText>
+            <MudText><MudIcon Icon="@Icons.Filled.ArrowCircleRight" Color="Color.Secondary"/>Tính năng SLI <br/> <span style="margin-left: 20px;font-size: 12px;">Cập nhật 1 tháng trước</span></MudText>
+        </MudTabPanel>
+        
+    </MudTabs>
+    <img src="./assets/ToolSEOViet-panner.png" style="flex: 1;"/>
+</div>
+
+<MudText Style="font-size: 20px; margin-top: 54px;">Các kênh hỗ trợ</MudText>
+<MudText Style="font-size: 16px;">Bạn vẫn cần trợ giúp? Vui lòng liên hệ với chúng tôi qua các kênh hỗ trợ dưới đây, 
+    đội ngũ Chăm Sóc Khách Hàng sẽ liên hệ và hỗ trợ ngay lập tức.
+</MudText>
+
+<MudGrid Spacing="5" Justify="Justify.Center" Style="grid-gap: 36px 109px; grid-template-columns: auto auto auto;
+  grid-template-rows: auto auto; margin: 54px 0;">
+    <MudItem xl="3" md="3" sm="5" xs="6" Style="z-index: 10; box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;">
+        <MudCard Outlined="true" Style="display: flex; border: none">
+            <MudIcon Icon="@Icons.Filled.Call" Color="Color.Secondary" Style="height: 64px; margin-left: 4px;" />
+
+            <div>
+                <MudCardContent>
+                    <MudText Style="font-size: 18px; font-weight: bold;">Hotline: 0123 456 789</MudText>
+                    <MudText Typo="Typo.subtitle2">it.phamky@gmail.com</MudText>
+                </MudCardContent>
+                <MudCardActions>
+                    <MudButton Href="scraping" Variant="Variant.Text" Style="background-color: #593ae2; color: white; text-decoration: none">Truy cập ngay</MudButton>
+                </MudCardActions>
+            </div>
+        </MudCard>
+    </MudItem>
+
+    <MudItem xl="3" md="3" sm="5" xs="6" Style="z-index: 10; box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;">
+        <MudCard Outlined="true" Style="display: flex; border: none">
+            <MudIcon Icon="@Icons.Filled.Message" Color="Color.Secondary" Style="height: 64px; margin-left: 4px;" />
+
+            <div>
+                <MudCardContent>
+                    <MudText Style="font-size: 18px; font-weight: bold;">Live chat</MudText>
+                    <MudText Typo="Typo.subtitle2">Nhắn tin qua Facebook Messenger với đội ngũ CSKH.</MudText>
+                </MudCardContent>
+                <MudCardActions>
+                    <MudButton Href="scraping" Variant="Variant.Text" Style="background-color: #593ae2; color: white; text-decoration: none">Truy cập ngay</MudButton>
+                </MudCardActions>
+            </div>
+        </MudCard>
+    </MudItem>
+
+    <MudItem xl="3" md="3" sm="5" xs="6" Style="z-index: 10; box-shadow: rgba(136, 165, 191, 0.48) 6px 2px 16px 0px, rgba(255, 255, 255, 0.8) -6px -2px 16px 0px;">
+        <MudCard Outlined="true" Style="display: flex; border: none">
+            <MudIcon Icon="@Icons.Filled.ContactPage" Color="Color.Secondary" Style="height: 64px; margin-left: 4px;" />
+
+            <div>
+                <MudCardContent>
+                    <MudText Style="font-size: 20px; font-weight: bold;">Facebook Page</MudText>
+                    <MudText Typo="Typo.subtitle2">Tham gia nhóm cộng động Facebook HKT để được hỗ trợ].</MudText>
+                </MudCardContent>
+                <MudCardActions>
+                    <MudButton Href="position" Variant="Variant.Text" Style="background-color: #593ae2; color: white; text-decoration: none">Truy cập ngay</MudButton>
+                </MudCardActions>
+            </div>
+        </MudCard>
+    </MudItem>
+</MudGrid>
