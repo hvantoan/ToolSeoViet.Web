@@ -3,6 +3,12 @@
 		<TargetFramework>net6.0</TargetFramework>
 		<EmitCompilerGeneratedFiles>true</EmitCompilerGeneratedFiles>
 	</PropertyGroup>
+	<ItemGroup>
+	  <Compile Remove="Models\Seo\SLI\**" />
+	  <Content Remove="Models\Seo\SLI\**" />
+	  <EmbeddedResource Remove="Models\Seo\SLI\**" />
+	  <None Remove="Models\Seo\SLI\**" />
+	</ItemGroup>
 
 	<ItemGroup>
 		<PackageReference Include="Blazored.LocalStorage" Version="4.2.0" />
@@ -14,7 +20,7 @@
 	</ItemGroup>
 
 	<ItemGroup>
-	  <Folder Include="Models\Seo\SLI\" />
+	  <Folder Include="Models\Seo\SearchPositon\" />
 	</ItemGroup>
 
 </Project>
